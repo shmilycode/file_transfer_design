@@ -25,7 +25,7 @@ activate FileTransferChannel2
 
 [->FileTransferChannel1: SendFile
 activate FileTransferChannel1
-FileTransferChannel1 -> FileTransferChannel1: Retransmission process thread
+FileTransferChannel1 -> FileTransferChannel1: Retransmission processer thread
 activate FileTransferChannel1
 FileTransferChannel1 -> FileTransferChannel1: Zip File
 activate FileTransferChannel1

@@ -6,17 +6,15 @@ class RetransmissionClient{
 }
 
 class RetransmissionServer{
-  void Run()
+  void AllocateAndRun()
 }
 
-class DataTransfer{
+class FileSender{
   void Write()
-  void Read()
-  void Close()
 }
 
-class MulticastTransfer{
-  void JoinGroup()
+class FileReceiver{
+  void AllocateAndRun()
 }
 
 class FileTransferServer{
@@ -27,21 +25,18 @@ class FileTransferClient{
   void ReceiveFile()
 }
 
-class FileHandler{
-  void Handle()
-}
-
-class FileZip{
-  void Zip()
-  void UnZip()
-}
-
-DataTransfer <|- MulticastTransfer
+RetransmissionClient <|-- UDPRetransmissionClient
+FileTransferClient --> RetransmissionClient
+FileTransferClient --> FileReceiver
+FileReceiver <-+ FileReceiverHandler
+FileReceiver <|-- MulticastReceiver
+MulticastReceiver --> UDPMulticastServer
 
 FileTransferServer --> RetransmissionServer
-FileTransferServer --> DataTransfer
-FileTransferClient --> RetransmissionClient
-FileTransferClient --> DataTransfer
-
-FileHandler <|- FileZip 
+FileTransferServer --> FileSender
+FileSender <|-- MulticastFileSender
+RetransmissionServer <-+ RetransmissionServerHandler
+RetransmissionServer --> RetransmissionServerDelegate
+RetransmissionServerDelegate <|-- RetransmissionServerDelegateImpl
+RetransmissionServerDelegateImpl --> UDPRetransmissionServer
 @enduml
