@@ -2,21 +2,28 @@
 
 class RetransmissionServer{
   void AllocateAndRun()
+  void OnRetransmissionRequest()
 }
 
-class FileSender{
-  void Write()
+class TransferServer{
 }
 
-class FileTransferServer{
+class UnreliableFileTransferServer{
   void SendFile()
 }
 
-FileTransferServer --> RetransmissionServer
-FileTransferServer --> FileSender
-FileSender <|-- MulticastFileSender
+class TFileTransferServer {
+  void SendFile()
+}
+
+UnreliableFileTransferServer *-- RetransmissionServer
+TFileTransferServer ---> TransferServer
+UnreliableFileTransferServer *-- TransferClient 
+TransferClient --> SocketClient 
+TransferServer --> SocketServer
+SocketServer <|-- SimpleSocketServer
 RetransmissionServer <-+ RetransmissionServerHandler
-RetransmissionServer --> RetransmissionServerDelegate
-RetransmissionServerDelegate <|-- RetransmissionServerDelegateImpl
-RetransmissionServerDelegateImpl --> UDPRetransmissionServer
+RetransmissionServer <|-- UDPRetransmissionServer
+UDPRetransmissionServer --> SocketServer
+SocketClient <|-- SimpleSocketClient
 @enduml

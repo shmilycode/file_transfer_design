@@ -2,22 +2,23 @@
 
 class RetransmissionClient{
   void RequestRetransmission()
-  void OnRetransmission()
 }
 
-class FileReceiver{
-  void AllocateAndRun()
+class TransferServer{
+  void WriteSlice()
+  void ReadSlice()
 }
 
 
-class FileTransferClient{
+class UnreliableFileTransferClient{
   void ReceiveFile()
 }
 
+UnreliableFileTransferClient *-- RetransmissionClient
+UnreliableFileTransferClient *-- TransferServer 
+ReliableFileTransferClient *-- TransferClient
 RetransmissionClient <|-- UDPRetransmissionClient
-FileTransferClient --> RetransmissionClient
-FileTransferClient --> FileReceiver
-FileReceiver <-+ FileReceiverHandler
-FileReceiver <|-- MulticastReceiver
-MulticastReceiver --> UDPMulticastServer
+TransferServer --> SocketClient 
+SocketClient <|-- SimpleNetClient
+TransferClient --> SocketClient
 @enduml
